@@ -6,7 +6,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.fly.rss.utils.RssUtil;
 
 public class RssDetailActivity extends ActionBarActivity{
 	public static final String RSS_TITLE = "rss_title";
@@ -15,12 +19,17 @@ public class RssDetailActivity extends ActionBarActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		if(android.os.Build.VERSION.SDK_INT >18){
+			Window window = getWindow();
+			window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_rss_detail);
 		
 		Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(mToolbar);
 		initUI();
+		RssUtil.setStateBarColor(this, "#0099CC");
 	}
 
 	private void initUI() {

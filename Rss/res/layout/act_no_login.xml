@@ -3,6 +3,7 @@
     android:id="@id/splashFrame" 
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
   	xmlns:android="http://schemas.android.com/apk/res/android">
   	<include layout="@layout/toolbar"/>
     <android.support.v4.widget.DrawerLayout

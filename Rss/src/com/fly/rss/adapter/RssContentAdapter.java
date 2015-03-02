@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.ab.util.AbViewUtil;
 import com.fly.rss.R;
-import com.fly.rss.utils.AbViewUtil;
 
 public class RssContentAdapter extends BaseAdapter{
 	private Context mContext = null;

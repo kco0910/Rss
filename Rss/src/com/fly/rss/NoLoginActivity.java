@@ -1,5 +1,6 @@
 package com.fly.rss;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import org.mcsoxford.rss.RSSException;
@@ -20,10 +21,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -38,6 +42,7 @@ import com.fly.db.RssClassDbDaoImpl;
 import com.fly.rss.adapter.RssContentAdapter;
 import com.fly.rss.dialog.LoadDialog;
 import com.fly.rss.model.RssConstant;
+import com.fly.rss.utils.RssUtil;
 import com.fly.rss.widget.EditDropSelect;
 
 public class NoLoginActivity extends ActionBarActivity implements OnClickListener,OnRefreshListener,OnItemClickListener{
@@ -47,12 +52,48 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 	@Override
 	protected void onCreate(Bundle saveInstanceState) {
 		// TODO Auto-generated method stub
+		if(android.os.Build.VERSION.SDK_INT >18){
+			Window window = getWindow();
+			window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			//设置虚拟按钮透明(导航栏)
+			//window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+		}
 		super.onCreate(saveInstanceState);
 		setContentView(R.layout.act_no_login);
 		initUI();
+		RssUtil.setStateBarColor(this, "#0099CC");
 	}
 	
-
+	 // 获取ActionBar的高度
+    public int getActionBarHeight() {
+        TypedValue tv = new TypedValue();
+        int actionBarHeight = 0;
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))// 如果资源是存在的、有效的
+        {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+        }
+        return actionBarHeight;
+    }
+    
+    // 获取手机状态栏高度
+    public int getStatusBarHeight() {
+        Class<?> c = null;
+        Object obj = null;
+        Field field = null;
+        int x = 0, statusBarHeight = 0;
+        try {
+            c = Class.forName("com.android.internal.R$dimen");
+            obj = c.newInstance();
+            field = c.getField("status_bar_height");
+            x = Integer.parseInt(field.get(obj).toString());
+            statusBarHeight = getResources().getDimensionPixelSize(x);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return statusBarHeight;
+    }
+    
+    
 	private void initUI(){
 		Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
 		mToolbar.setTitle(R.string.app_name);

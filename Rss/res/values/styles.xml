@@ -3,9 +3,9 @@
     
    	<style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
    	    <!-- toolbar颜色 -->
-        <item name="colorPrimary">@color/c_ededed</item>
+        <item name="colorPrimary">#0099FF</item>
         <!-- 状态栏颜色 -->
-        <item name="colorPrimaryDark">@color/c_9c9c9c</item>
+        <item name="colorPrimaryDark">#FF0000</item>
         <item name="colorAccent">@color/material_deep_teal_200</item>
          <!-- 窗口的背景颜色 -->  
         <item name="android:windowBackground">@android:color/white</item> 
