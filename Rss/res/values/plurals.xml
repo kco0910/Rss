@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="appwidget_minutes_ago">
+        <item quantity="other">%dm ago</item>
+        <item quantity="one">%dm ago</item>
+    </plurals>
+    <plurals name="appwidget_hours_ago">
+        <item quantity="other">%dh ago</item>
+        <item quantity="one">%dh ago</item>
+    </plurals>
+    <plurals name="appwidget_days_ago">
+        <item quantity="other">%dd ago</item>
+        <item quantity="one">%dd ago</item>
+    </plurals>
+    <plurals name="appwidget_months_ago">
+        <item quantity="other">%d months ago</item>
+        <item quantity="one">%d month ago</item>
+    </plurals>
+    <plurals name="appwidget_years_ago">
+        <item quantity="other">%d years ago</item>
+        <item quantity="one">%d year ago</item>
+    </plurals>
+</resources>

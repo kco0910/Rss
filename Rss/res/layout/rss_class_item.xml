@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView android:id="@+id/tv_rss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rss_source"
+        android:layout_alignTop="@+id/tv_rss_title"
+        android:layout_alignBottom="@+id/tv_rss_title"
+        android:gravity="center"/>
+    
+    <TextView style="@style/TextContentTitle"
+        android:id="@+id/tv_rss_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@+id/tv_rss"
+        android:gravity="left|center_vertical"
+        android:layout_marginLeft="10dp"/>
+    
+	<TextView android:id="@+id/tv_class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rss_class"
+        android:layout_alignTop="@+id/edit_drop"
+        android:layout_alignBottom="@+id/edit_drop"
+        android:gravity="center"/>
+	
+    <com.fly.rss.widget.EditDropSelect
+        android:id="@+id/edit_drop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tv_class"
+        android:layout_below="@+id/tv_rss_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp">
+    </com.fly.rss.widget.EditDropSelect>
+</RelativeLayout>

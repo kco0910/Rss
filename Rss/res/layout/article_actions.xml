@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button android:id="@id/btnTweetArticle" 
+        android:layout_width="wrap_content" 
+        android:text="@string/action_tweet" 
+        android:layout_height="wrap_content"/>
+    
+    <Button android:id="@id/btnMailArticle" 
+        android:layout_width="wrap_content" 
+        android:text="@string/action_mail"
+        android:layout_height="wrap_content" />
+    
+    <Button android:id="@id/btnCopyURL" 
+        android:layout_width="wrap_content" 
+        android:text="@string/action_copy_url"
+        android:layout_height="wrap_content"/>
+    
+    <Button android:id="@id/btnOpenInBrowser" 
+        android:layout_width="wrap_content" 
+        android:text="@string/action_open_in_browser"
+        android:layout_height="wrap_content"  />
+    
+    <Button android:id="@id/btnMobilize" 
+        android:layout_width="wrap_content" 
+        android:text="@string/action_mobilize"
+        android:layout_height="wrap_content"  />
+</LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="#ff3bc4c6" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" android:weightSum="10.0" android:layout_above="@id/appwidget_promo_button_text" android:layout_alignParentTop="true">
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="9.0">
+            <ImageView android:id="@id/appwidget_promo_image" android:paddingRight="15.0dip" android:layout_width="70.0dip" android:layout_height="70.0dip" android:scaleType="centerInside" />
+            <TextView android:textSize="16.0dip" android:textColor="@*android:color/white" android:id="@id/appwidget_promo_message" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="sans-serif-condensed" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView android:textSize="24.0dip" android:textStyle="bold" android:textColor="@*android:color/white" android:gravity="center" android:id="@id/appwidget_promo_button_text" android:background="@drawable/appwidget_promo_button_back" android:paddingLeft="25.0dip" android:paddingTop="12.0dip" android:paddingRight="25.0dip" android:paddingBottom="12.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginBottom="10.0dip" android:layout_alignParentLeft="true" android:layout_alignParentBottom="true" android:fontFamily="sans-serif" />
+</RelativeLayout>

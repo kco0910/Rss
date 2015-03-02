@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="#ff3bc4c6" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_above="@id/appwidget_promo_button_text" android:layout_alignParentTop="true">
+        <ImageView android:id="@id/appwidget_promo_image" android:paddingRight="5.0dip" android:layout_width="80.0dip" android:layout_height="80.0dip" android:scaleType="centerInside" />
+        <TextView android:textSize="20.0dip" android:textColor="@*android:color/white" android:gravity="center" android:id="@id/appwidget_promo_message" android:paddingLeft="20.0dip" android:paddingTop="10.0dip" android:paddingRight="20.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="sans-serif-condensed" />
+    </LinearLayout>
+    <TextView android:textSize="24.0dip" android:textStyle="bold" android:textColor="@*android:color/white" android:gravity="center" android:id="@id/appwidget_promo_button_text" android:background="@drawable/appwidget_promo_button_back" android:paddingLeft="25.0dip" android:paddingTop="12.0dip" android:paddingRight="25.0dip" android:paddingBottom="12.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:layout_marginBottom="10.0dip" android:layout_alignParentLeft="true" android:layout_alignParentBottom="true" android:fontFamily="sans-serif" />
+</RelativeLayout>

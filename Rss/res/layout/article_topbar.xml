@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" 
+    android:id="@id/articleToolbar" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff303030">
+    <ImageButton android:id="@id/closeButton" 
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/action_close" 
+        android:layout_alignParentLeft="true" 
+        style="@style/ImageToolbarButton" />
+    <ImageButton android:id="@id/menuOptions" 
+        android:contentDescription="@string/app_name"
+        android:padding="0.0dip" 
+        android:src="@drawable/action_more" 
+        android:layout_alignParentRight="true" 
+        android:layout_centerVertical="true" 
+        style="@style/ImageToolbarButton" />
+    <ImageButton android:id="@id/saveButton" 
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/action_save_for_later" 
+        android:layout_toLeftOf="@id/menuOptions" 
+        android:layout_alignBaseline="@id/menuOptions" 
+        style="@style/ImageToolbarButton" />
+</RelativeLayout>

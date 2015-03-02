@@ -1,0 +1,25 @@
+	private Point getDisplayPoint(){
+		Point point = new Point();
+		LinearLayout content = (LinearLayout)findViewById(R.id.drawer_content);
+		int width = content.getWidth();
+		int height = content.getHeight();
+		System.out.println("width :"+width+",height:"+height);
+		point.set(width, height);
+		return point;
+	}
+
+	/**
+	 * 获取每页可以放置的数量
+	 */
+	private int measureContentNum(){
+		int num = 0;
+		Point point = getDisplayPoint();
+		int itemHeight = (int)getResources().getDimension(R.dimen.content_item_height);
+		num = point.y /itemHeight;
+		return num;
+	}
+
+
+				int num = measureContentNum();
+				RssPageAdapter pageAdapter = new RssPageAdapter(getSupportFragmentManager(), num, feed.getItems());
+				viewPager.setAdapter(pageAdapter);

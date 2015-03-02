@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <color name="c_f1f1f1">#f1f1f1</color>
+   <color name = "c_ededed">#ededed</color>
+   <color name = "c_9c9c9c">#9c9c9c</color>
+   <color name = "c_777777">#777777</color>
+   <color name = "c_b7b7b7">#b7b7b7</color>
+   <color name = "c_33ffff">#99FFFF</color>
+   <color name = "c_333333">#333333</color>
+</resources>
