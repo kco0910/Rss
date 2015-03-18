@@ -18,6 +18,8 @@ import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -26,26 +28,26 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.ab.fragment.AbAlertDialogFragment;
 import com.ab.fragment.AbAlertDialogFragment.AbDialogOnClickListener;
 import com.ab.util.AbToastUtil;
-import com.fly.rss.adapter.RssContentAdapter;
+import com.fly.rss.adapter.RssRecleContentAdapter;
 import com.fly.rss.db.RssClassDbDaoImpl;
 import com.fly.rss.dialog.LoadDialog;
+import com.fly.rss.interfaces.IOnItemClickListener;
 import com.fly.rss.model.RssConstant;
+import com.fly.rss.utils.RssUtil;
 import com.fly.rss.utils.SharedPreferencesUtil;
 import com.fly.rss.widget.EditDropSelect;
 
-public class NoLoginActivity extends ActionBarActivity implements OnClickListener,OnRefreshListener,OnItemClickListener{
+public class NoLoginActivity extends ActionBarActivity implements OnClickListener,OnRefreshListener,IOnItemClickListener{
 	private SwipeRefreshLayout refreshLayout = null;
-	private RssContentAdapter contentAdapter = null;
+	//private RssContentAdapter contentAdapter = null;
+	private RssRecleContentAdapter recleContentAdapter = null;
 	private GetRssContentTask mGetRssContentTask = null;
 	private RssClassDbDaoImpl mRssClassDbDaoImpl = null;
 	/** 是否第一次显示*/
@@ -61,8 +63,9 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 		}
 		super.onCreate(saveInstanceState);
 		setContentView(R.layout.act_no_login);
-		//RssUtil.setStateBarColor(this, "#0099CC");
+		RssUtil.setStateBarColor(this,getResources().getColor(R.color.c_status_bar));
 		initUI();
+		
 	}
 	
 	private void initUI(){
@@ -92,10 +95,12 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
                 android.R.color.holo_green_light,  
                 android.R.color.holo_orange_light,  
                 android.R.color.holo_red_light);*/
-		ListView listview = (ListView)findViewById(R.id.listview);
-		contentAdapter = new RssContentAdapter(this);
-		listview.setAdapter(contentAdapter);
-		listview.setOnItemClickListener(this);
+		RecyclerView listview = (RecyclerView)findViewById(R.id.recyclerView);
+		LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+		listview.setLayoutManager(layoutManager);
+		recleContentAdapter = new RssRecleContentAdapter(this);
+		recleContentAdapter.setOnItemClickListener(this);
+		listview.setAdapter(recleContentAdapter);
 	}
 	
 	@Override
@@ -263,8 +268,8 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 					saveRssClass(feed);
 				}else{
 					//显示Rss内容
-					contentAdapter.setData(feed.getItems());
-					contentAdapter.notifyDataSetChanged();
+					recleContentAdapter.setData(feed.getItems());
+					recleContentAdapter.notifyDataSetChanged();
 				}
 			}
 		}
@@ -291,8 +296,8 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 						SharedPreferencesUtil.putString(NoLoginActivity.this, SharedPreferencesUtil.LAST_READ_RSS_link
 								, feed.getRssLink());
 						//显示Rss内容
-						contentAdapter.setData(feed.getItems());
-						contentAdapter.notifyDataSetChanged();
+						recleContentAdapter.setData(feed.getItems());
+						recleContentAdapter.notifyDataSetChanged();
 					}else{
 						AbToastUtil.showToast(NoLoginActivity.this, R.string.class_name_not_null);
 					}
@@ -332,13 +337,11 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 		}, 1000);
 		
 	}
-	
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
+	public void onItemClick(int position) {
 		// TODO Auto-generated method stub
-		RSSItem rssItem = (RSSItem)parent.getItemAtPosition(position);
+		RSSItem rssItem = recleContentAdapter.getData().get(position);
 		if(rssItem != null){
 			Intent intent = new Intent(this, RssDetailActivity.class);
 			intent.putExtra(RssDetailActivity.RSS_CONTENT, rssItem.getContent());

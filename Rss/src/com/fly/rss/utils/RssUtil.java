@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -17,11 +16,11 @@ public class RssUtil {
 	 * @param act
 	 * @param color
 	 */
-	public static void setStateBarColor(Activity act,String color){
+	public static void setStateBarColor(Activity act,int color){
 		//设置状态栏的颜色
 		TextView textView = new TextView(act);
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, getStatusBarHeight(act));
-        textView.setBackgroundColor(Color.parseColor(color));
+        textView.setBackgroundColor(color);
         textView.setLayoutParams(lParams);
         // 获得根视图并把TextView加进去。
         ViewGroup view = (ViewGroup) act.getWindow().getDecorView();

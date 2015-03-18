@@ -7,4 +7,17 @@
    <color name = "c_b7b7b7">#b7b7b7</color>
    <color name = "c_33ffff">#99FFFF</color>
    <color name = "c_333333">#333333</color>
+   
+   <!-- 状态栏颜色 -->
+   <color name = "c_status_bar">#1976D2</color>
+   <!-- 工具栏颜色 -->
+   <color name = "c_tool_bar">#2196F3</color>
+   <!-- 背景颜色 -->
+   <color name = "c_bg">#ffffff</color>
+   <!-- 主要的文字颜色 -->
+   <color name = "c_text_primary">#727272</color>
+   <!-- 次要的文字颜色 -->
+   <color name = "c_text_secondary">#868686</color>
+   <!-- 间隔线 -->
+   <color name = "c_gap">#212121</color>
 </resources>

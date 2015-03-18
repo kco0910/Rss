@@ -97,6 +97,7 @@ public class EditDropSelect extends RelativeLayout{
 				}
 				popupWindow.setOnItemClickListener(new ItemClick());
 				popupWindow.setAnchorView(EditDropSelect.this);
+				popupWindow.setModal(true);
 			}
 			if(!popupWindow.isShowing()){
 				popupWindow.show();

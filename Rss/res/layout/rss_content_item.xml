@@ -7,18 +7,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/TextContentTitle"
-        android:text="哈哈"
         android:singleLine="true"/>
     <TextView android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/TextContent"
-        android:text="嘻嘻dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
         android:maxLines="3"/>
     <TextView android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/TextContent"
-        android:text="ddd"
         android:singleLine="true"/>    
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/c_gap"/>    
 </LinearLayout>

@@ -29,7 +29,7 @@ public class RssDetailActivity extends ActionBarActivity{
 		Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(mToolbar);
 		initUI();
-		RssUtil.setStateBarColor(this, "#0099CC");
+		RssUtil.setStateBarColor(this, getResources().getColor(R.color.c_status_bar));
 	}
 
 	private void initUI() {

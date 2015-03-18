@@ -10,60 +10,66 @@ import java.util.Locale;
 import org.mcsoxford.rss.RSSItem;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.ab.util.AbViewUtil;
 import com.fly.rss.R;
+import com.fly.rss.interfaces.IOnItemClickListener;
 
-public class RssContentAdapter extends BaseAdapter{
+public class RssRecleContentAdapter extends RecyclerView.Adapter<RssRecleContentAdapter.ViewHolder>  implements OnClickListener{
 	private Context mContext = null;
-	private List<RSSItem> rssItems  = new ArrayList<RSSItem>();
-	public RssContentAdapter(Context context) {
+	private List<RSSItem> rssItems  = null;
+	private IOnItemClickListener mLis = null;
+	public RssRecleContentAdapter(Context context) {
 		// TODO Auto-generated constructor stub
+		super();
 		mContext = context;
+		rssItems = new ArrayList<RSSItem>();
 	}
 	
+	public static class ViewHolder extends RecyclerView.ViewHolder{
+		TextView tvTitle,tvContent,tvTime;
+		public ViewHolder(View itemView) {
+			super(itemView);
+			// TODO Auto-generated constructor stub
+			if(itemView != null){
+				tvTitle = (TextView)itemView.findViewById(R.id.tv_title);
+				tvContent = (TextView)itemView.findViewById(R.id.tv_content);
+				tvTime = (TextView)itemView.findViewById(R.id.tv_time);
+			}
+		}
+		
+	}
+
 	@Override
-	public int getCount() {
+	public int getItemCount() {
 		// TODO Auto-generated method stub
 		return rssItems.size();
 	}
 
 	@Override
-	public RSSItem getItem(int position) {
+	public void onBindViewHolder(ViewHolder viewHolder, int i) {
 		// TODO Auto-generated method stub
-		return rssItems.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return position;
-	}
-
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		if(convertView == null){
-			convertView = View.inflate(mContext, R.layout.rss_content_item, null);
-			AbViewUtil.scaleContentView((ViewGroup)convertView);
-			int minHeight = AbViewUtil.scale(mContext,mContext.getResources().getDimension(R.dimen.content_item_height));
-			convertView.setMinimumHeight(minHeight);
-		}
-		TextView tvTitle = ViewHolder.get(convertView, R.id.tv_title);
-		TextView tvContent = ViewHolder.get(convertView, R.id.tv_content);
-		TextView tvTime = ViewHolder.get(convertView, R.id.tv_time);
-		RSSItem rssItem  = rssItems.get(position);
+		RSSItem rssItem = rssItems.get(i);
 		if(rssItem != null){
-			tvTitle.setText(rssItem.getTitle());
-			tvContent.setText(Html.fromHtml(rssItem.getDescription()));
-			tvTime.setText(dateToStr(rssItem.getPubDate()));
+			viewHolder.tvTitle.setText(rssItem.getTitle());
+			viewHolder.tvContent.setText(Html.fromHtml(rssItem.getDescription()));
+			viewHolder.tvTime.setText(dateToStr(rssItem.getPubDate()));
 		}
-		return convertView;
+	}
+
+	@Override
+	public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+		// TODO Auto-generated method stub
+		View convertView = View.inflate(mContext, R.layout.rss_content_item, null);
+		convertView.setTag(i);
+		convertView.setOnClickListener(this);
+		ViewHolder holder = new ViewHolder(convertView);
+		return holder;
 	}
 
 	public void setData(List<RSSItem> rssItems){
@@ -75,8 +81,12 @@ public class RssContentAdapter extends BaseAdapter{
 	public List<RSSItem> getData(){
 		return rssItems;
 	}
-		
-	 static String dateToStr(Date date){
+	
+	public void setOnItemClickListener(IOnItemClickListener lis){
+		mLis = lis;
+	}
+
+	static String dateToStr(Date date){
 		if(date == null){
 			return "";
 		}
@@ -129,4 +139,14 @@ public class RssContentAdapter extends BaseAdapter{
 		return str;
 	}
 
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		int p = (Integer)v.getTag();
+		if(mLis != null){
+			mLis.onItemClick(p);
+		}
+	}
 }
+
+

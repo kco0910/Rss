@@ -3,9 +3,10 @@
     
    	<style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
    	    <!-- toolbar颜色 -->
-        <item name="colorPrimary">#0099FF</item>
-        <!-- 状态栏颜色 -->
+        <item name="colorPrimary">@color/c_tool_bar</item>
+        <!-- 状态栏颜色,jar包设置不起作用 -->
         <item name="colorPrimaryDark">#FF0000</item>
+        
         <item name="colorAccent">@color/material_deep_teal_200</item>
          <!-- 窗口的背景颜色 -->  
         <item name="android:windowBackground">@android:color/white</item> 
@@ -17,18 +18,15 @@
    	<style name = "AppTheme" parent="@style/AppBaseTheme"></style>
     
    	<style name = "TextBaseStyle" parent="@style/TextAppearance.AppCompat">
-   	    <item name = "android:textSize">30sp</item>
    	    <item name = "android:textColor">@android:color/black</item>
    	</style>
    	
    	<style name = "TextContentTitle" parent="TextBaseStyle">
-   	    <item name = "android:textSize">28sp</item>
-   	    <item name = "android:textColor">@color/c_777777</item>
+   	    <item name = "android:textColor">@color/c_text_primary</item>
    	</style>
    	
 	<style name = "TextContent" parent="TextBaseStyle">
-   	    <item name = "android:textSize">25sp</item>
-   	    <item name = "android:textColor">@color/c_b7b7b7</item>
+   	    <item name = "android:textColor">@color/c_text_secondary</item>
    	</style>  	
    	
 	
