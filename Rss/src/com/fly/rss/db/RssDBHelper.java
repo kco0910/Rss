@@ -1,4 +1,4 @@
-package com.fly.db;
+package com.fly.rss.db;
 
 import android.content.Context;
 

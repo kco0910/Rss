@@ -28,7 +28,11 @@ public class RssUtil {
         view.addView(textView);
 	}
 	
-	 // 获取ActionBar的高度
+	/**
+	 * 获取ActionBar的高度
+	 * @param context
+	 * @return
+	 */
     public static int getActionBarHeight(Context context) {
         TypedValue tv = new TypedValue();
         int actionBarHeight = 0;
@@ -39,7 +43,11 @@ public class RssUtil {
         return actionBarHeight;
     }
     
-    // 获取手机状态栏高度
+	 /**
+	  * 获取手机状态栏高度
+	  * @param context
+	  * @return
+	  */
     public static int getStatusBarHeight(Context context) {
         Class<?> c = null;
         Object obj = null;

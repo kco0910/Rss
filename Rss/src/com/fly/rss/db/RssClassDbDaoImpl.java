@@ -1,4 +1,4 @@
-package com.fly.db;
+package com.fly.rss.db;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class RssClassDbDaoImpl extends AbDBDaoImpl<RssClass> {
 		List<RssSite> rssSites = new ArrayList<RssSite>();
 		RssSite rssSite = new RssSite();
 		rssSite.setRssClassId(id);
-		rssSite.setRssLink(feed.getLink().getHost());
+		rssSite.setRssLink(feed.getRssLink());
 		rssSite.setRssTitle(feed.getTitle());
 		rssSites.add(rssSite);
 		
@@ -62,7 +62,7 @@ public class RssClassDbDaoImpl extends AbDBDaoImpl<RssClass> {
 	}
 	
 	
-	public List<String> getRssClass(){
+	public List<String> getRssClassNames(){
 		List<String> classes = new ArrayList<String>();
 		startReadableDatabase();
 		List<RssClass> rssClasses = queryList();
@@ -71,6 +71,13 @@ public class RssClassDbDaoImpl extends AbDBDaoImpl<RssClass> {
 		}
 		closeDatabase();
 		return classes;
+	}
+	
+	public List<RssClass> getRssClasses(){
+		startReadableDatabase();
+		List<RssClass> rssClasses = queryList();
+		closeDatabase();
+		return rssClasses;
 	}
 	
 	

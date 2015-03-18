@@ -1,6 +1,5 @@
 package com.fly.rss;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import org.mcsoxford.rss.RSSException;
@@ -21,7 +20,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,17 +36,20 @@ import android.widget.ListView;
 import com.ab.fragment.AbAlertDialogFragment;
 import com.ab.fragment.AbAlertDialogFragment.AbDialogOnClickListener;
 import com.ab.util.AbToastUtil;
-import com.fly.db.RssClassDbDaoImpl;
 import com.fly.rss.adapter.RssContentAdapter;
+import com.fly.rss.db.RssClassDbDaoImpl;
 import com.fly.rss.dialog.LoadDialog;
 import com.fly.rss.model.RssConstant;
-import com.fly.rss.utils.RssUtil;
+import com.fly.rss.utils.SharedPreferencesUtil;
 import com.fly.rss.widget.EditDropSelect;
 
 public class NoLoginActivity extends ActionBarActivity implements OnClickListener,OnRefreshListener,OnItemClickListener{
 	private SwipeRefreshLayout refreshLayout = null;
 	private RssContentAdapter contentAdapter = null;
 	private GetRssContentTask mGetRssContentTask = null;
+	private RssClassDbDaoImpl mRssClassDbDaoImpl = null;
+	/** 是否第一次显示*/
+	private boolean isFirstShow = true;
 	@Override
 	protected void onCreate(Bundle saveInstanceState) {
 		// TODO Auto-generated method stub
@@ -60,40 +61,10 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 		}
 		super.onCreate(saveInstanceState);
 		setContentView(R.layout.act_no_login);
+		//RssUtil.setStateBarColor(this, "#0099CC");
 		initUI();
-		RssUtil.setStateBarColor(this, "#0099CC");
 	}
 	
-	 // 获取ActionBar的高度
-    public int getActionBarHeight() {
-        TypedValue tv = new TypedValue();
-        int actionBarHeight = 0;
-        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))// 如果资源是存在的、有效的
-        {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
-        }
-        return actionBarHeight;
-    }
-    
-    // 获取手机状态栏高度
-    public int getStatusBarHeight() {
-        Class<?> c = null;
-        Object obj = null;
-        Field field = null;
-        int x = 0, statusBarHeight = 0;
-        try {
-            c = Class.forName("com.android.internal.R$dimen");
-            obj = c.newInstance();
-            field = c.getField("status_bar_height");
-            x = Integer.parseInt(field.get(obj).toString());
-            statusBarHeight = getResources().getDimensionPixelSize(x);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        return statusBarHeight;
-    }
-    
-    
 	private void initUI(){
 		Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
 		mToolbar.setTitle(R.string.app_name);
@@ -125,9 +96,36 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 		contentAdapter = new RssContentAdapter(this);
 		listview.setAdapter(contentAdapter);
 		listview.setOnItemClickListener(this);
-		
 	}
-
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		// TODO Auto-generated method stub
+		super.onWindowFocusChanged(hasFocus);
+		if(hasFocus && isFirstShow){
+			initRss();
+			isFirstShow = false;
+		}
+	}
+	
+	/**
+	 * 初始化Rss显示
+	 */
+	private void initRss(){
+		String lastReadLink = SharedPreferencesUtil.getString(this, SharedPreferencesUtil.LAST_READ_RSS_link);
+		if(!TextUtils.isEmpty(lastReadLink)){
+			System.out.println("initRss:"+lastReadLink);
+			mGetRssContentTask = new GetRssContentTask(false);
+			mGetRssContentTask.execute(lastReadLink);
+		}else{
+			System.out.println("没有打开RSS记录!");
+		}
+	}
+	
+	private RssClassDbDaoImpl getRssClassDbDaoImpl(){
+		return mRssClassDbDaoImpl == null ? new RssClassDbDaoImpl(this) : mRssClassDbDaoImpl;
+	}
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -165,8 +163,6 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 			break;
 		}
 	}
-
-
 	
 	private void addRss(){
 		View view = View.inflate(this, R.layout.add_content, null);
@@ -212,6 +208,18 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 	 */
 	private class GetRssContentTask extends AsyncTask<String, Void, RSSFeed>{
 		
+		private boolean mIsSave = false;
+		public GetRssContentTask(){
+			this(true);
+		}
+		/**
+		 * 是否进行保存操作
+		 * @param isSave
+		 */
+		public GetRssContentTask(boolean isSave){
+			mIsSave = isSave;
+		}
+		
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
@@ -235,7 +243,6 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 			try {
 				reader = new RSSReader(new RssReponseDeliver());
 				feed = reader.load(url);
-				System.out.println(feed.getItems().size());
 			} catch (Exception e) {
 			}finally{
 				if(reader != null) reader.close();
@@ -251,8 +258,14 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 				mLoadDialog.dismiss();
 			}
 			if(feed != null){
-				//弹出分类窗口
-				saveRssClass(feed);
+				if(mIsSave){
+					//弹出分类窗口
+					saveRssClass(feed);
+				}else{
+					//显示Rss内容
+					contentAdapter.setData(feed.getItems());
+					contentAdapter.notifyDataSetChanged();
+				}
 			}
 		}
 	}
@@ -263,7 +276,7 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 			View view = View.inflate(this, R.layout.rss_class_item, null);
 			final EditDropSelect editDropSelect = (EditDropSelect)view.findViewById(R.id.edit_drop);
 			RssClassDbDaoImpl rssClassDbDaoImpl = new RssClassDbDaoImpl(this);
-			List<String> rssClasses =  rssClassDbDaoImpl.getRssClass();
+			List<String> rssClasses =  rssClassDbDaoImpl.getRssClassNames();
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rssClasses);
 			editDropSelect.setAdapter(adapter);
 			AbAlertDialogFragment.newInstance(0, getString(R.string.add_rss), null, view, new AbDialogOnClickListener() {
@@ -272,9 +285,12 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 					// TODO Auto-generated method stub
 					String className = editDropSelect.getEditTextStr();
 					if(!TextUtils.isEmpty(className)){
-						RssClassDbDaoImpl rssClassDbDaoImpl = new RssClassDbDaoImpl(NoLoginActivity.this);
+						RssClassDbDaoImpl rssClassDbDaoImpl = getRssClassDbDaoImpl();
 						rssClassDbDaoImpl.addNewRss(feed, className);
-						
+						//记录打开的Rss
+						SharedPreferencesUtil.putString(NoLoginActivity.this, SharedPreferencesUtil.LAST_READ_RSS_link
+								, feed.getRssLink());
+						//显示Rss内容
 						contentAdapter.setData(feed.getItems());
 						contentAdapter.notifyDataSetChanged();
 					}else{
