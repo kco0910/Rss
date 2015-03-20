@@ -8,6 +8,7 @@
         android:id="@+id/add_rss"
         android:orderInCategory="80"
         android:title="@string/addRss"
+        android:icon="@drawable/ic__add"
         app:showAsAction="ifRoom"/>
     
     <item

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:icon="@drawable/action_save_for_later" android:id="@id/tweet_article_item" android:title="@string/action_tweet" />
     <item android:id="@id/mail_article_item" android:title="@string/action_mail" />
     <item android:id="@id/copyUrl_article_item" android:title="@string/action_copy_url" />
     <item android:id="@id/open_in_brwoser_article_item" android:title="@string/action_open_in_browser" />

@@ -9,12 +9,18 @@
         
         <item name="colorAccent">@color/material_deep_teal_200</item>
          <!-- 窗口的背景颜色 -->  
-        <item name="android:windowBackground">@android:color/white</item> 
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- 返回键颜色 --> 
+        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
         <!-- SearchView  
         <item name="searchViewStyle">@style/MySearchViewStyle</item>  
         --> 
     </style>
     
+   	<style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+   	</style>
+   	
    	<style name = "AppTheme" parent="@style/AppBaseTheme"></style>
     
    	<style name = "TextBaseStyle" parent="@style/TextAppearance.AppCompat">
@@ -33,17 +39,6 @@
    	<style name="ButtonBaseStyle" parent ="@style/Base.TextAppearance.AppCompat.Button">
    	    <item name = "android:layout_width">200dp</item>
    	    <item name = "android:layout_height">60dp</item>
-   	</style>
-    
-     <style name="ImageToolbarButton" parent="@android:style/Widget.Button">
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/btn_icon</item>
-        <item name="android:focusable">true</item>
-        <item name="android:clickable">true</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">80dp</item>
-        <item name="android:scaleType">fitCenter</item>
-        <item name="android:layout_weight">1.0</item>
-        <item name="android:layout_centerVertical">true</item>
-    </style>
+   	</style>  
+
 </resources>

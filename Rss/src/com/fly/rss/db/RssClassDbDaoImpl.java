@@ -73,6 +73,8 @@ public class RssClassDbDaoImpl extends AbDBDaoImpl<RssClass> {
 		return classes;
 	}
 	
+	
+	
 	public List<RssClass> getRssClasses(){
 		startReadableDatabase();
 		List<RssClass> rssClasses = queryList();
@@ -80,5 +82,11 @@ public class RssClassDbDaoImpl extends AbDBDaoImpl<RssClass> {
 		return rssClasses;
 	}
 	
+	
+	public void getGroup(){
+		
+		
+		
+	}
 	
 }

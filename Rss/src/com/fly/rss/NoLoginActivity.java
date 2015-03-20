@@ -25,26 +25,27 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 
 import com.ab.fragment.AbAlertDialogFragment;
 import com.ab.fragment.AbAlertDialogFragment.AbDialogOnClickListener;
 import com.ab.util.AbToastUtil;
+import com.fly.rss.adapter.ExpandableAdapter;
 import com.fly.rss.adapter.RssRecleContentAdapter;
 import com.fly.rss.db.RssClassDbDaoImpl;
 import com.fly.rss.dialog.LoadDialog;
 import com.fly.rss.interfaces.IOnItemClickListener;
+import com.fly.rss.model.RssClass;
 import com.fly.rss.model.RssConstant;
 import com.fly.rss.utils.RssUtil;
 import com.fly.rss.utils.SharedPreferencesUtil;
 import com.fly.rss.widget.EditDropSelect;
 
-public class NoLoginActivity extends ActionBarActivity implements OnClickListener,OnRefreshListener,IOnItemClickListener{
+public class NoLoginActivity extends ActionBarActivity implements OnRefreshListener,IOnItemClickListener{
 	private SwipeRefreshLayout refreshLayout = null;
 	//private RssContentAdapter contentAdapter = null;
 	private RssRecleContentAdapter recleContentAdapter = null;
@@ -70,7 +71,8 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 	
 	private void initUI(){
 		Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
-		mToolbar.setTitle(R.string.app_name);
+		mToolbar.setTitle("");//R.string.app_name
+		mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 		//mToolbar.setSubtitle("副标题");
 		setSupportActionBar(mToolbar);
 		/**必须写在set之后 */
@@ -81,14 +83,9 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 		actionBar.setLogo(R.drawable.icon); */
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		DrawerLayout mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
-		ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, 
-				mDrawerLayout, mToolbar,R.string.open, R.string.close);
+		ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,R.string.open, R.string.close);
 		mDrawerToggle.syncState();
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		
-		Button btnLogin = (Button)findViewById(R.id.btn_login);
-		Button btnAddContent = (Button)findViewById(R.id.btn_add_content);
-		btnAddContent.setOnClickListener(this);
 		refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe);
 		refreshLayout.setOnRefreshListener(this);
 		/*refreshLayout.setColorSchemeColors(android.R.color.holo_blue_bright,  
@@ -101,6 +98,16 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 		recleContentAdapter = new RssRecleContentAdapter(this);
 		recleContentAdapter.setOnItemClickListener(this);
 		listview.setAdapter(recleContentAdapter);
+		
+		//侧边栏
+		ExpandableListView expRss = (ExpandableListView)findViewById(R.id.content_list);
+		ExpandableAdapter expandableAdapter = new ExpandableAdapter(this);
+		expRss.setAdapter(expandableAdapter);
+		RssClassDbDaoImpl dbDaoImpl = getRssClassDbDaoImpl();
+		List<RssClass>  rssClasses = dbDaoImpl.getRssClasses();
+		System.out.println(rssClasses);
+		expandableAdapter.setData(rssClasses);
+		
 	}
 	
 	@Override
@@ -147,8 +154,9 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 	        	addRss();
 	            break;  
 	        case R.id.barcode:  
-	        	
-	        	
+	        	RssClassDbDaoImpl rssClassDbDaoImpl = getRssClassDbDaoImpl();
+	        	List<RssClass> rssClasses = rssClassDbDaoImpl.getRssClasses();
+	        	System.out.println(rssClasses);
 	            break;  
 	        default:  
 	            break;  
@@ -156,19 +164,6 @@ public class NoLoginActivity extends ActionBarActivity implements OnClickListene
 	     return true; 
 	}
 
-
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.btn_add_content:
-			
-			break;
-		default:
-			break;
-		}
-	}
-	
 	private void addRss(){
 		View view = View.inflate(this, R.layout.add_content, null);
 		final EditText etRssLink = (EditText)view.findViewById(R.id.et_rss_link);

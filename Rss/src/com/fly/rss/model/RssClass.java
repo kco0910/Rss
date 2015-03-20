@@ -46,13 +46,13 @@ public class RssClass {
 	public String toString() {
 		// TODO Auto-generated method stub
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("分类名称:"+className+",分类ID:"+classId);
+		buffer.append("分类名称:"+className+",分类ID:"+classId).append(",");
 		if(sites != null){
 			for(RssSite rssSite : sites){
-				buffer.append(rssSite.toString());
+				buffer.append(rssSite.toString()).append(",");
 			}
 		}else{
-			buffer.append("--- > 站点为空");
+			buffer.append("--- > 站点为空").append(",");
 		}
 		return buffer.toString();
 	}
