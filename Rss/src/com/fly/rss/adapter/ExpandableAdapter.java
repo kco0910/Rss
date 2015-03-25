@@ -5,16 +5,24 @@ import java.util.List;
 
 import android.content.Context;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.fly.rss.R;
 import com.fly.rss.model.RssClass;
 import com.fly.rss.model.RssSite;
 
 public class ExpandableAdapter extends BaseExpandableListAdapter{
 	private List<RssClass> rssClasses = null;
 	private Context mContext = null;
+	private OnClickListener mClickListener = null;
+	private OnChildClickListener mClildClick = null;
 	public ExpandableAdapter(Context context) {
 		// TODO Auto-generated constructor stub
 		mContext = context;
@@ -88,18 +96,34 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 	}
 
 	@Override
-	public View getChildView(int groupPosition, int childPosition,
-			boolean isLastChild, View convertView, ViewGroup parent) {
+	public View getChildView(final int groupPosition, final int childPosition,
+			boolean isLastChild,View convertView, final ViewGroup parent) {
 		// TODO Auto-generated method stub
 		if(convertView == null){
-			convertView = View.inflate(mContext, android.R.layout.simple_list_item_1, null);
+			convertView = View.inflate(mContext, R.layout.content_del_item, null);
 			convertView.setPadding(100, 0, 0, 0);
 		}
-		TextView tv = (TextView)convertView.findViewById(android.R.id.text1);
 		RssSite rssSite = getChild(groupPosition, childPosition);
+		TextView tv = (TextView)convertView.findViewById(android.R.id.text1);
+		Button ibDel = (Button)convertView.findViewById(R.id.ib_del);
+		if(mClickListener != null){
+			ibDel.setTag(rssSite);
+			ibDel.setOnClickListener(mClickListener);
+		}
 		if(rssSite != null){
 			tv.setText(rssSite.getRssTitle());
 		}
+		ibDel.setFocusable(false);
+		convertView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(mClildClick != null){
+					mClildClick.onChildClick((ExpandableListView)parent,
+							null, groupPosition, childPosition, 0);
+				}
+			}
+		});
 		return convertView;
 	}
 
@@ -115,6 +139,16 @@ public class ExpandableAdapter extends BaseExpandableListAdapter{
 			notifyDataSetChanged();
 		}
 	}
+	/**
+	 * 必须写在setAdapter前
+	 * @param clickListener
+	 */
+	public void setOnContentDel(OnClickListener clickListener){
+		mClickListener = clickListener;
+	}
+		
+	public void setOnChildItemClick(OnChildClickListener childClick){
+		mClildClick = childClick;
+	}
 	
-
 }

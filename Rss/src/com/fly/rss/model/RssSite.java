@@ -45,4 +45,10 @@ public class RssSite {
 		buffer.append("站点名称:"+getRssTitle()).append("站点链接:"+getRssLink()).append("\n");
 		return buffer.toString();
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 }

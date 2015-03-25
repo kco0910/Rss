@@ -21,8 +21,8 @@ public class LoadDialog implements OnDismissListener{
 	
 	public LoadDialog(Context context,String loadDescribe){
 		mContext = context;
-		Drawable bgDrawable = context.getResources().getDrawable(R.color.c_333333);
-		mPopupWindow = new PopupWindow(200,200);
+		Drawable bgDrawable = context.getResources().getDrawable(R.drawable.loading_bg);
+		mPopupWindow = new PopupWindow(300,300);
 		mPopupWindow.setBackgroundDrawable(bgDrawable);
 		mPopupWindow.setOnDismissListener(this);
 		mPopupWindow.setOutsideTouchable(true);

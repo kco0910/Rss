@@ -51,14 +51,16 @@ public class EditDropSelect extends RelativeLayout{
 		editText.setId(editId);
 		LayoutParams editParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		editText.setLayoutParams(editParams);
-		editText.setMinWidth(300);
+		editText.setHint(R.string.hint_rss_save);
+		editText.setMinWidth(400);
 		addView(editText);
 		
 		Button btnDrop = new Button(context);
-		LayoutParams btnParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		LayoutParams btnParams = new LayoutParams(100, 100);
 		btnParams.addRule(RelativeLayout.RIGHT_OF, editId);
+		btnParams.addRule(RelativeLayout.CENTER_VERTICAL);
 		btnDrop.setLayoutParams(btnParams);
-		btnDrop.setText("下拉");
+		btnDrop.setBackgroundResource(R.drawable.input_xx);
 		btnDrop.setOnClickListener(new DropClick());
 		
 		addView(btnDrop);

@@ -3,11 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/loading_bg"
     android:gravity="center" >
-	<ProgressBar android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    style="?android:attr/progressBarStyleLarge"/>
+	<ProgressBar android:layout_width="50dp"
+	    android:layout_height="50dp"
+	    style="?android:attr/progressBarStyleLarge"
+	    android:indeterminateDrawable="@drawable/pb_drawable"
+        android:indeterminateDuration="1000"/>
 	<TextView android:id="@+id/tv_load"
 	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"/>
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="20dp"
+	    android:text="ffff"
+	    android:textColor="@color/white"/>
 </LinearLayout>

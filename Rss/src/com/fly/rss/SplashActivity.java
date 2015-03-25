@@ -38,11 +38,7 @@ public class SplashActivity extends Activity{
 			// TODO Auto-generated method stub
 			Intent intent = new Intent();
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			if(isLogin()){
-				intent.setClass(SplashActivity.this, LoginActivity.class);
-			}else{
-				intent.setClass(SplashActivity.this, NoLoginActivity.class);
-			}
+			intent.setClass(SplashActivity.this, MainActivity.class);
 			startActivity(intent);
 			finish();
 		}
